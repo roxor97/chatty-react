@@ -56,6 +56,48 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          authenticated: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          authenticated: false,
+          loading: false,
+        });
+      }
+    });
+  }
+
+  render() {
+    return this.state.loading === true ? (
+      <h2>Loading...</h2>
+    ) : (
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/" component={Home}></Route>
+          <PrivateRoute
+            path="/chat"
+            authenticated={this.state.authenticated}
+            component={Chat}
+          ></PrivateRoute>
+          <PublicRoute
+            path="/signup"
+            authenticated={this.state.authenticated}
+            component={Signup}
+          ></PublicRoute>
+          <PublicRoute
+            path="/login"
+            authenticated={this.state.authenticated}
+            component={Login}
+          ></PublicRoute>
+        </Routes>
+      </BrowserRouter>
+    );
+  }
 
 }
 
