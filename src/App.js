@@ -1,5 +1,4 @@
 import './App.css';
-import Auth from './helpers/Auth';
 import {
   BrowserRouter,
   Routes,
